@@ -1,0 +1,82 @@
+﻿@{
+    ViewData["Title"] = "Index";
+}
+<br /><br />
+<div class="row">
+    <div class="col-lg-6">
+        <h3><strong> Roles List </strong></h3>
+
+    </div>
+    <div class="col-lg-6 col-sm-12 text-right">
+        <a asp-action="Create" class="btn btn-dark">&nbsp;New Role </a>
+        <a asp-action="Assign" class="btn btn-dark">&nbsp;Assign Role </a>
+        <a asp-action="AssignUserRole" class="btn btn-dark">Role Users List</a>
+
+    </div>
+</div>
+<br />
+<div>
+    <table class="table table-striped border">
+        <tr class="table-info">
+            <th>
+                Name
+            </th>
+
+            <th></th>
+
+        </tr>
+        @foreach (var item in ViewBag.Roles)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td style="width:150px">
+                    <div class="btn-group">
+                        <a asp-action="Edit" class=" btn btn-primary"data-toggle="tooltip"  title="Edit" asp-route-id="@item.Id">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                        @*<a asp-action="Details" class="btn btn-success" asp-route-id="@item.Id">
+                            <i class="fa fa-list-alt"></i>
+                        </a>*@
+                        <a asp-action="Delete" class="btn btn-danger" data-toggle="tooltip"  title="Delete" asp-route-id="@item.Id">
+                            <i class="fa fa-trash-alt"></i>
+                        </a>
+                    </div>
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+
+
+@section scripts{
+    <script src="~/lib/AlertifyJS/alertify.min.js"></script>
+    <script type="text/javascript">
+
+    $(function ()
+    {
+    var save ='@TempData["Save"]'
+    if(save !='')
+    {
+        alertify.success(save);
+    }
+    })
+      $(function ()
+    {
+        var save ='@TempData["Update"]'
+    if(save !='')
+    {
+        alertify.message(save);    }
+        })
+
+        $(function ()
+    {
+        var save ='@TempData["Delete"]'
+    if(save !='')
+    {
+        alertify.error(save);
+    }
+        })
+
+
+    </script>
+}

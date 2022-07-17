@@ -1,0 +1,71 @@
+﻿@{
+    ViewData["Title"] = "Index";
+}
+<br /><br />
+      <div class="row">
+          <div class="col-lg-6">
+              <h2 class=" text-dark"><strong> Role Users List</strong></h2>
+          </div>
+          <div class="col-lg-6 col-sm-12 text-right">
+              <a asp-action="Index" class="btn btn-dark">&nbsp;Roles </a>
+              <a asp-action="Assign" class="btn btn-dark">&nbsp;Assign Role </a>
+              <a asp-action="AssignUserRole" class="btn btn-dark">Role Users List</a>
+
+          </div>
+         
+      </div>
+<br />
+<div>
+    <table class="table table-striped border">
+        <tr class="table-info">
+            <th>
+                User Name
+            </th>
+
+            <th>Role Name</th>
+
+        </tr>
+        @foreach (var item in ViewBag.Roles)
+        {
+            <tr>
+                <td>@item.UserName</td>
+                <td>@item.RoleNAme</td>
+              
+            </tr>
+        }
+    </table>
+</div>
+
+
+@section scripts{
+    <script src="~/lib/AlertifyJS/alertify.min.js"></script>
+    <script type="text/javascript">
+
+    $(function ()
+    {
+    var save ='@TempData["Save"]'
+    if(save !='')
+    {
+        alertify.success(save);
+    }
+    })
+      $(function ()
+    {
+        var save ='@TempData["Update"]'
+    if(save !='')
+    {
+        alertify.message(save);    }
+        })
+
+        $(function ()
+    {
+        var save ='@TempData["Delete"]'
+    if(save !='')
+    {
+        alertify.error(save);
+    }
+        })
+
+
+    </script>
+}

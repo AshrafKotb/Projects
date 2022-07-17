@@ -1,0 +1,56 @@
+﻿@model List<Product>
+@{
+    ViewData["Title"] = "Card";
+}
+
+<h1> <strong>Your Card</strong></h1>
+
+<br />
+<div class="row">
+    <table class="table table-bordered  table-sm">
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Prodyct Type</th>
+                <th>Color</th>
+                <th></th>
+            </tr>
+
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <img src="~/@item.Image" class="table-responsive-sm" width="200" height="150" />
+                    </td>
+                    <td>@item.Name</td>
+                    <td>@item.Price</td>
+                    <td>@item.ProductTypes.ProductType</td>
+                    <td>@item.ProductColor</td>
+                    <td>
+
+                        <a asp-area="Customer" asp-action="Remove" class="btn btn-danger" data-toggle="tooltip" title="Delete" asp-route-id="@item.Id">
+                            <i class="fa fa-trash-alt"></i>
+                        </a>
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div class="row">
+    <div class="col-lg-6 col-sm ">
+        <a asp-action="Index" asp-controller="Home" style="border-radius:10px" class="btn btn-success">Back To Home </a>
+    </div>
+    <div class="col-lg-6 col-sm text-right">
+        <h3><strong>Total Amount</strong></h3>
+        <h4> @Model.Sum(c => c.Price)</h4>
+        <a asp-action="Checkout" asp-controller="Order" style="border-radius:10px" class="btn btn-info">Process To checkout </a>
+    </div>
+
+
+</div>

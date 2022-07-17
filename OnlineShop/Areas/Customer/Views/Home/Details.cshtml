@@ -1,0 +1,101 @@
+﻿@model Product
+@{
+    ViewData["Title"] = "Details";
+}
+@using System.Net.Http
+@using OnlineShop.Utility
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    List<Product> products = HttpContextAccessor.HttpContext.Session.Get<List<Product>>("products"); ;
+    Product prod = null;
+    if (products != null)
+    {
+        prod = products.FirstOrDefault(c => c.Id == Model.Id);
+    }
+}
+
+<h2 class="text-dark"><strong>Product Details</strong></h2>
+
+<form asp-action="" method="post" enctype="multipart/form-data">
+    <div class="p-4 rounded border row">
+        <div asp-validation-summary="ModelOnly" class=" text-danger"></div>
+
+        <div class="col-lg-8 col-sm-12">
+            <div class="form-group row">
+                <div class=" col-4">
+                    <strong><label asp-for="Name"></label></strong>
+                </div>
+                <div class="col-8">
+                    <input asp-for="Id" type="hidden" />
+                    <input asp-for="Name" readonly="readonly" class="form-control" />
+                </div>
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <div class=" col-4">
+                    <strong><label asp-for="Price"></label></strong>
+                </div>
+                <div class="col-8">
+                    <input asp-for="Price" readonly="readonly" class="form-control" />
+                </div>
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <div class=" col-4">
+                    <strong><label asp-for="ProductColor"></label></strong>
+                </div>
+                <div class="col-8">
+                    <input asp-for="ProductColor" readonly="readonly" class="form-control" />
+                </div>
+                <span asp-validation-for="ProductColor" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <div class=" col-4">
+                    <strong><label asp-for="ProductTypeID"></label></strong>
+                </div>
+                <div class="col-8">
+                    @*<select asp-for="ProductTypeID" asp-items="ViewBag.ProductTypeID" class="form-control"></select>*@
+                    <input asp-for="ProductTypeID" readonly="readonly" class="form-control" />
+                </div>
+                <span asp-validation-for="ProductTypeID" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <div class=" col-4">
+                    <div class="form-group">
+                        <a asp-action="Index" style="border-radius:10px" class="btn btn-success">Back To List</a>
+                    </div>
+                </div>
+                <div class="col-8">
+                    @if (prod != null)
+                    {
+                        <button type="submit" class="btn btn-danger form-control" style="border-radius:10px" asp-action="Remove" asp-route-id="@Model.Id">Remove to Card</button>
+                    }
+                    else
+                    {
+                        <input type="submit" class="btn btn-info form-control" style="border-radius:10px" value="Add To Card" />
+                    }
+                </div>
+            </div>
+
+
+        </div>
+        <div class="col-lg-1"></div>
+        <div class="col-lg-3">
+            <img src="~/@Model.Image" class="img-fluid" style="border-radius:15px; border:5px solid #efefef" />
+            @if (Model.IsAvailable == true)
+            {
+                <img src="~/assets/images/instocklogo.jfif" style="width:160px ;height:30px" />
+            }
+            else
+            {
+                <img src="~/assets/images/notinstock.png" style="width:180px ;height:50px" />
+            }
+        </div>
+    </div>
+</form>
+
+@section Scripts
+    {
+    @{await Html.RenderPartialAsync(partialViewName: "_ValidationScriptsPartial"); }
+}

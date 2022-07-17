@@ -1,0 +1,66 @@
+﻿
+@model IEnumerable<SpecialTag>
+@{
+    ViewData["Title"] = "Index";
+}
+<br /><br />
+<div class="row">
+    <div class="col-6">
+        <h3><strong> Brands List</strong></h3>
+    </div>
+    <div class="col-6 text-right">
+        <a asp-action="Create" class="btn btn-dark" style="border-radius:10px">&nbsp;Add New Brand </a>
+
+    </div>
+</div>
+<br />
+<div>
+    <table class="table table-striped border">
+        <tr class="table-info">
+            <th>
+                @Html.DisplayNameFor(expression: c => c.name)
+            </th>
+            <th></th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.name</td>
+                <td>
+                    <partial name="_ButtonPartial" model="@item.id" />
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+
+
+@section scripts{
+    <script src="~/lib/AlertifyJS/alertify.min.js"></script>
+    <script type="text/javascript">
+    $(function ()
+    {
+    var save ='@TempData["Save"]'
+    if(save !='')
+    {
+        alertify.success(save);
+    }
+    })
+      $(function ()
+    {
+        var save ='@TempData["Update"]'
+    if(save !='')
+    {
+        alertify.message(save);    }
+        })
+
+        $(function ()
+    {
+        var save ='@TempData["Delete"]'
+    if(save !='')
+    {
+        alertify.error(save);
+    }
+        })
+    </script>
+}

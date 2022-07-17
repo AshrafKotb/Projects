@@ -1,0 +1,120 @@
+﻿
+@model IEnumerable<Product>
+@{
+    ViewData["Title"] = "Index";
+}
+<br />
+<div class="row">
+    <div class="col-lg-6 col-sm-6"> 
+       <h3><strong> Product List</strong></h3>
+    </div>
+    <div class="col-lg-6 col-sm-6 text-right">
+        <a asp-action="Create" class="btn btn-dark">&nbsp;Add New Product</a>
+    </div>
+</div>
+<br />
+<form method="post">
+    <div class="row">
+        <div class="col-4 col-sm-3">
+            <input type="number"  placeholder="Minimum Price" name="lowAmount" class="form-control" />
+        </div>
+        <div class="col-4 col-sm-3">
+            <input type="number" name="largeAmount" placeholder=" Maximum Price" class="form-control" />
+        </div>
+        <div class="col-3 ">
+            <div>
+                <button type="submit" class="btn btn-success">
+                    <i class="fa fa-search text-capitalize " style="border-radius:10px"></i> Search
+                </button>
+
+            </div>
+        </div>
+        <div class="col-3"></div>
+    </div>
+</form>
+<br />
+<div>
+    <table id="example" class="table table-striped border table-responsive-sm" style="width:100% ">
+        <thead  class="table-light text-dark">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(expression: c => c.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(expression: c => c.Price)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(expression: c => c.ProductColor)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(expression: c => c.IsAvailable)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(expression: c => c.ProductTypeID)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(expression: c => c.SpecialTagID)
+                </th>
+                <td></td>
+            </tr>
+
+        </thead>
+        <tbody >
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@item.Price</td>
+                    <td>@item.ProductColor</td>
+                    <td>@item.IsAvailable</td>
+                    <td>@item.ProductTypes.ProductType</td>
+                    <td>@item.SpecialTag.name</td>
+                    <partial name="_ButtonPartial" model="@item.Id" />
+                </tr>
+            }
+        </tbody>
+    </table>
+   
+</div>
+
+@section scripts{
+    <script src="~/lib/AlertifyJS/alertify.min.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+            $('#example').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+        });</script>
+    <script type="text/javascript">
+
+    $(function ()
+    {
+    var save ='@TempData["Save"]'
+    if(save !='')
+    {
+        alertify.success(save);
+    }
+    })
+      $(function ()
+    {
+        var save ='@TempData["Update"]'
+    if(save !='')
+    {
+        alertify.message(save);    }
+        })
+
+        $(function ()
+    {
+        var save ='@TempData["Delete"]'
+    if(save !='')
+    {
+        alertify.error(save);
+    }
+        })
+       
+
+    </script>
+}

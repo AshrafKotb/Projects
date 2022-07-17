@@ -1,0 +1,62 @@
+﻿@model SpecialTag
+@{
+    ViewData["Title"] = "Delete";
+}
+<h2 class="text-dark"><strong>Delete Special Tag </strong> </h2>
+
+<form asp-action="Delete" method="post">
+    <div class="p-4 rounded border">
+        <input asp-for="id" type="hidden" />
+        <div asp-validation-summary="ModelOnly" class=" text-danger"></div>
+        <div class="form-group row">
+            <div class=" col-lg-2 col-sm">
+             <strong><label asp-for="name"></label></strong>
+            </div>
+            <div class="col-lg-5 col-sm">
+                <input asp-for="name" readonly="readonly" class="form-control" />
+            </div>
+            <span asp-validation-for="name" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            
+
+            @*------------------------------------------------------------*@
+
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-danger" style="border-radius:10px" data-toggle="modal" data-target="#staticBackdrop">
+          Delete
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade " id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2 class="modal-title" id="staticBackdropLabel">Delete Product Type</h2>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body text-justify">
+                           <img src="~/assets/images/shock-3-578101.png" alt="Shock" style="height:150px;width:150px;"/>
+                           <strong >  You will lose this Data !</strong>
+                            <br />
+                            <h3 class="text-center text-danger">
+                                Sure  wanna delete it ?
+                            </h3>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Close</button>
+                            <input type="submit" class="btn btn-danger" value="Delete" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <a asp-action="Index" style="border-radius:10px" class="btn btn-success">Back To List</a>
+        </div>
+    </div
+</form>
+@section Scripts
+    {
+    @{await Html.RenderPartialAsync(partialViewName: "_ValidationScriptsPartial"); }
+}

@@ -1,0 +1,93 @@
+﻿
+@model IEnumerable<ApplicationUser>
+@{
+    ViewData["Title"] = "Index";
+}
+<br /><br />
+<div class="row">
+    <div class="col-6">
+        <h3><strong> Users List</strong></h3>
+    </div>
+    <div class="col-6 text-right">
+        <a asp-action="Create" style="border-radius:10px" class="btn btn-dark">&nbsp;New User </a>
+    </div>
+</div>
+<br />
+<div class=" table-responsive fixed-table-body"  >
+    <table class="table table-striped border"  >
+        <tr class="table-info">
+            <th>
+                Name
+            </th>
+            <th>
+                UserName
+            </th>
+            <th>Status</th>
+            <th></th>
+           
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.FirstName @item.LastName</td>
+                <td>@item.UserName</td>
+                @if (item.LockoutEnd > DateTime.Now && item.LockoutEnd != null)
+                {
+                    <td>Inactive</td>
+                    <td>
+                        <div class="btn-group">
+                            <a asp-action="Active" class=" btn btn-primary" data-toggle="tooltip"  title="Active" asp-route-id="@item.Id">
+                                <i class="fa fa-lock-open"></i>
+                            </a>
+                             
+                            <a asp-action="Delete" class="btn btn-danger"data-toggle="tooltip"  title="Delete" asp-route-id="@item.Id">
+                                <i class="fa fa-trash-alt"></i>
+                            </a>
+                        </div>
+                    </td>
+                    
+                }
+                else
+                {
+                    <td>Active</td>                    
+                        <partial name="PartialView" model="@item.Id" />
+                }
+
+            </tr>
+        }
+    </table>
+</div>
+
+
+@section scripts{
+    <script src="~/lib/AlertifyJS/alertify.min.js"></script>
+    <script type="text/javascript">
+
+    $(function ()
+    {
+    var save ='@TempData["Save"]'
+    if(save !='')
+    {
+        alertify.success(save);
+    }
+    })
+      $(function ()
+    {
+        var save ='@TempData["Update"]'
+    if(save !='')
+    {
+        alertify.message(save);    }
+        })
+
+        $(function ()
+    {
+        var save ='@TempData["Delete"]'
+    if(save !='')
+    {
+        alertify.error(save);
+    }
+        })
+
+
+    </script>
+}
